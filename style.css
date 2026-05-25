@@ -38,7 +38,7 @@ body {
     width: 100%;
     height: 100%;
     z-index: -2;
-    background-image: url('./img/tuberculose.jpeg');
+    background-image: url('img/turbeculose.jpeg');
     background-size: cover;
     background-position: center;
     filter: brightness(0.15) contrast(1.1); /* Bem escuro para dar destaque total ao quiz */
@@ -96,7 +96,7 @@ header p {
 .quiz-banner {
     width: 100%;
     height: 450px; 
-    background-image: url('./img/tuberculose.jpeg');
+    background-image: url('img/turbeculose.jpeg');
     background-repeat: no-repeat;
     border-radius: 12px;
     margin-bottom: 25px;
