@@ -17,7 +17,7 @@ const rawQuestions = [
         q: "Como a tuberculose pode ser transmitida?",
         o: ["Pelo consumo de água contaminada", "Pelo ar, através da tosse e espirro", "Pelo toque nas mãos", "Pela picada de mosquito"],
         a: 1,
-        exp: "A transmissão acontece pelo ar."
+        exp: "A transmissão acontece pelo ar, quando uma pessoa doente tosse ou espirra."
     },
     {
         q: "Qual destes NÃO é sintoma da tuberculose?",
@@ -29,19 +29,19 @@ const rawQuestions = [
         q: "Se uma pessoa tosse por muitas semanas, ela deve:",
         o: ["Ignorar", "Procurar atendimento médico", "Fazer exercício", "Tomar sorvete"],
         a: 1,
-        exp: "É importante procurar ajuda médica."
+        exp: "Tosse por muitas semanas precisa ser avaliada por um profissional de saúde."
     },
     {
         q: "Qual hábito ajuda a evitar doenças respiratórias?",
         o: ["Lavar as mãos", "Compartilhar garrafas", "Ficar em locais fechados", "Não tomar água"],
         a: 0,
-        exp: "Lavar as mãos ajuda a prevenir doenças."
+        exp: "Lavar as mãos ajuda a prevenir várias doenças."
     },
     {
         q: "A tuberculose tem cura?",
         o: ["Não", "Sim, com tratamento correto", "Apenas em crianças", "Apenas com cirurgia"],
         a: 1,
-        exp: "A tuberculose tem cura."
+        exp: "A tuberculose tem cura quando o tratamento é feito corretamente."
     },
     {
         q: "Qual órgão do corpo é mais afetado pela tuberculose?",
@@ -53,25 +53,25 @@ const rawQuestions = [
         q: "A vacina que ajuda a proteger contra formas graves da tuberculose chama-se:",
         o: ["HPV", "Influenza", "BCG", "Tríplice Viral"],
         a: 2,
-        exp: "A vacina BCG ajuda na proteção."
+        exp: "A vacina BCG ajuda a proteger contra formas graves da tuberculose."
     },
     {
         q: "A tuberculose pode atingir outras partes do corpo além dos pulmões?",
         o: ["Verdadeiro", "Falso"],
         a: 0,
-        exp: "Ela pode atingir outras partes do corpo."
+        exp: "A tuberculose pode afetar outras partes do corpo além dos pulmões."
     },
     {
         q: "Pessoas com tuberculose sempre apresentam sintomas imediatamente?",
         o: ["Verdadeiro", "Falso"],
         a: 1,
-        exp: "Nem sempre os sintomas aparecem rápido."
+        exp: "Algumas pessoas podem não apresentar sintomas logo no início."
     },
     {
         q: "A tuberculose é:",
         o: ["Genética", "Contagiosa", "Autoimune", "Nutricional"],
         a: 1,
-        exp: "A tuberculose é contagiosa."
+        exp: "A tuberculose é contagiosa e pode ser transmitida pelo ar."
     }
 ];
 
@@ -84,7 +84,6 @@ let studentName = "";
 const startScreen = document.getElementById("start-screen");
 const questionScreen = document.getElementById("question-screen");
 const resultScreen = document.getElementById("result-screen");
-const lockScreen = document.getElementById("lock-screen");
 
 const startBtn = document.getElementById("start-btn");
 const nextBtn = document.getElementById("next-btn");
@@ -95,6 +94,7 @@ const optionsContainer = document.getElementById("options-container");
 
 const progressBar = document.getElementById("progress-bar");
 const progressContainer = document.getElementById("progress-container");
+
 const liveScore = document.getElementById("live-score");
 const kidsMessage = document.getElementById("kids-message");
 const statusDelivery = document.getElementById("status-delivery");
@@ -102,6 +102,7 @@ const statusDelivery = document.getElementById("status-delivery");
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
+
         [array[i], array[j]] = [array[j], array[i]];
     }
 }
@@ -117,10 +118,16 @@ function startQuiz() {
     }
 
     quizQuestions = rawQuestions.map(item => {
+        const correctText = item.o[item.a];
+        const shuffledOptions = [...item.o];
+
+        shuffle(shuffledOptions);
+
         return {
             q: item.q,
-            o: [...item.o],
-            a: item.a,
+            o: shuffledOptions,
+            a: shuffledOptions.indexOf(correctText),
+            correctText: correctText,
             exp: item.exp
         };
     });
@@ -129,17 +136,19 @@ function startQuiz() {
 
     currentQuestionIndex = 0;
     score = 0;
+    selectedOptionIndex = null;
 
     if (liveScore) {
-        liveScore.textContent = score;
+        liveScore.textContent = "0";
+    }
+
+    if (statusDelivery) {
+        statusDelivery.innerHTML = "📤 Enviando nota...";
     }
 
     startScreen.classList.remove("active");
+    resultScreen.classList.remove("active");
     questionScreen.classList.add("active");
-
-    if (resultScreen) {
-        resultScreen.classList.remove("active");
-    }
 
     if (progressContainer) {
         progressContainer.style.display = "block";
@@ -193,7 +202,11 @@ function loadQuestion() {
                 }
 
                 if (kidsMessage) {
-                    kidsMessage.innerHTML = `🎉 Muito bem! Você acertou!<br><small>${currentQuestion.exp}</small>`;
+                    kidsMessage.innerHTML = `
+                        🎉 Muito bem! Você acertou!
+                        <br>
+                        <small>${currentQuestion.exp}</small>
+                    `;
                 }
             } else {
                 li.classList.add("wrong");
@@ -203,7 +216,12 @@ function loadQuestion() {
                 }
 
                 if (kidsMessage) {
-                    kidsMessage.innerHTML = `😔 Quase! A resposta correta era: <strong>${currentQuestion.o[currentQuestion.a]}</strong><br><small>${currentQuestion.exp}</small>`;
+                    kidsMessage.innerHTML = `
+                        😔 Quase! A resposta correta era:
+                        <strong>${currentQuestion.correctText}</strong>
+                        <br>
+                        <small>${currentQuestion.exp}</small>
+                    `;
                 }
             }
 
@@ -232,16 +250,24 @@ function finishQuiz() {
         progressBar.style.width = "100%";
     }
 
-    document.getElementById("final-score").textContent = score;
-
+    const finalScore = document.getElementById("final-score");
     const feedback = document.getElementById("feedback-msg");
 
-    if (score >= 10) {
-        feedback.innerHTML = "🏆 Excelente! Você mandou muito bem!";
-    } else if (score >= 6) {
-        feedback.innerHTML = "👏 Muito bom! Continue estudando!";
-    } else {
-        feedback.innerHTML = "📚 Continue praticando! Você consegue melhorar!";
+    if (finalScore) {
+        finalScore.textContent = score;
+    }
+
+    if (feedback) {
+        if (score >= 10) {
+            feedback.innerHTML = "🏆 Excelente! Você mandou muito bem!";
+            feedback.style.color = "var(--correct)";
+        } else if (score >= 6) {
+            feedback.innerHTML = "👏 Muito bom! Continue estudando!";
+            feedback.style.color = "var(--primary)";
+        } else {
+            feedback.innerHTML = "📚 Continue praticando! Você consegue melhorar!";
+            feedback.style.color = "var(--wrong)";
+        }
     }
 
     enviarResultado();
@@ -275,15 +301,42 @@ function enviarResultado() {
             }
         } else {
             if (statusDelivery) {
-                statusDelivery.innerHTML = "⚠️ O quiz terminou, mas houve erro ao enviar a nota.";
+                statusDelivery.innerHTML = "⚠️ Quiz concluído, mas houve erro ao enviar a nota.";
             }
         }
     })
     .catch(() => {
         if (statusDelivery) {
-            statusDelivery.innerHTML = "❌ Erro de conexão. Teste usando Live Server ou localhost.";
+            statusDelivery.innerHTML = "❌ Erro de conexão. Use Live Server ou localhost para testar.";
         }
     });
+}
+
+function restartQuiz() {
+    currentQuestionIndex = 0;
+    score = 0;
+    selectedOptionIndex = null;
+    studentName = "";
+
+    if (liveScore) {
+        liveScore.textContent = "0";
+    }
+
+    if (kidsMessage) {
+        kidsMessage.innerHTML = "";
+    }
+
+    if (progressBar) {
+        progressBar.style.width = "0%";
+    }
+
+    if (progressContainer) {
+        progressContainer.style.display = "none";
+    }
+
+    resultScreen.classList.remove("active");
+    questionScreen.classList.remove("active");
+    startScreen.classList.add("active");
 }
 
 startBtn.addEventListener("click", startQuiz);
