@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Interativo: Competição Tuberculose</title>
+    <link rel="stylesheet" href="/public/style.css">
+</head>
+<body>
+
+    <div class="bg-image-container"></div>
+    <div class="bg-overlay"></div>
+
+    <div class="quiz-container">
+        <header>
+            <h1>Desafio Saúde</h1>
+            <p>Quiz sobre Tuberculose • 8º Ano</p>
+        </header>
+
+        <div class="quiz-banner"></div>
+
+        <div class="progress-bar-container" id="progress-container" style="display: none;">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+
+        <div id="start-screen" class="screen active">
+            <h2 style="margin-bottom: 15px;">Identificação do Aluno</h2>
+            
+            <div class="input-group">
+                <label for="student-name">Nome Completo:</label>
+                <input type="text" id="student-name" placeholder="Digite seu nome completo">
+            </div>
+
+            <div class="input-group">
+                <label for="student-class">Sua Turma:</label>
+                <select id="student-class">
+                    <option value="">Selecione sua turma...</option>
+                    <option value="8º Ano A">8º Ano A</option>
+                    <option value="8º Ano B">8º Ano B</option>
+                    <option value="8º Ano C">8º Ano C</option>
+                </select>
+            </div>
+
+            <button class="btn" id="start-btn">Iniciar Competição</button>
+        </div>
+
+        <div id="question-screen" class="screen">
+            <div id="q-number" style="font-size:14px; color:var(--primary); font-weight:bold; margin-bottom:10px;"></div>
+            <div class="question-text" id="q-text">Carregando...</div>
+            <ul class="options-list" id="options-container"></ul>
+            <button class="btn" id="next-btn" disabled>Confirmar e Avançar</button>
+        </div>
+
+        <div id="result-screen" class="screen" style="text-align: center;">
+            <h2>Quiz Concluído!</h2>
+            <div class="score-circle">
+                <div class="score-num" id="final-score">0</div>
+                <div style="font-size:14px; color:#8a99ad;">de 13</div>
+            </div>
+            <div id="feedback-msg" style="font-size:18px; font-weight:bold; margin-bottom:10px;"></div>
+            
+            <div class="status-msg" id="status-delivery">📤 Enviando nota para o sistema do professor...</div>
+        </div>
+
+        <div id="lock-screen" class="screen">
+            <div class="lock-icon">🔒</div>
+            <h2>Acesso Concluído</h2>
+            <p style="color: #8a99ad;">Você já realizou este desafio. Sua nota já foi salva com sucesso no painel do professor!</p>
+        </div>
+    </div>
+
+    <script src="/public/script.js"></script>
+</body>
+</html>
