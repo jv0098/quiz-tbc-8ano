@@ -237,7 +237,7 @@ function loadQuestion() {
                     .classList.add('correct');
 
                 document.getElementById('kids-message').innerHTML =
-                    "😅 Quase! Continue tentando!";
+                    "😔 Quase! Continue tentando!";
             }
 
             nextBtn.disabled = false;
