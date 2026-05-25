@@ -1,20 +1,85 @@
 // Link Formspree oficial configurado do Administrador
-const FORMSPREE_URL = "https://formspree.io/f/xaqkdlby"; 
+const FORMSPREE_URL = "https://formspree.io/f/xaqkdlby";
 
 const rawQuestions = [
-    { q: "O que é a tuberculose?", o: ["Uma doença causada por vírus", "Uma doença causada por bactéria", "Uma alergia respiratória", "Uma doença genética"], a: 1 },
-    { q: "Qual destes é um sintoma comum da tuberculose?", o: ["Dor de ouvido", "Tosse persistente", "Quebra de braço", "Coceira na pele"], a: 1 },
-    { q: "Como a tuberculose pode ser transmitida?", o: ["Pelo consumo de água contaminada", "Pelo ar, através da tosse e espirro", "Pelo toque nas mãos", "Pela picada de mosquito"], a: 1 },
-    { q: "Qual destes NÃO é sintoma da tuberculose?", o: ["Tosse longa", "Febre", "Suor noturno", "Quebra de braço"], a: 3 },
-    { q: "Se uma pessoa tosse por muitas semanas, ela deve:", o: ["Ignorar", "Procurar atendimento médico", "Fazer exercício", "Tomar sorvete"], a: 1 },
-    { q: "Qual hábito ajuda a evitar doenças respiratórias?", o: ["Lavar as mãos", "Compartilhar garrafas", "Ficar em locais fechados", "Não tomar água"], a: 0 },
-    { q: "A tuberculose tem cura?", o: ["Não", "Sim, com tratamento correto", "Apenas em crianças", "Apenas com cirurgia"], a: 1 },
-    { q: "Qual órgão do corpo é mais afetado pela tuberculose?", o: ["Coração", "Pele", "Pulmões", "Estômago"], a: 2 },
-    { q: "A vacina que ajuda a proteger contra formas graves da tuberculose chama-se:", o: ["HPV", "Influenza", "BCG", "Tríplice Viral"], a: 2 },
-    { q: "A tuberculose pode atingir outras partes do corpo além dos pulmões?", o: ["Verdadeiro", "Falso"], a: 0 },
-    { q: "Pessoas com tuberculose sempre apresentam sintomas imediatamente", o: ["Verdadeiro", "Falso"], a: 1 },
-    { q: "Qual é o sintoma mais comum?", o: ["Dor no pé", "Tosse persistente", "Coceira", "Dor de dente"], a: 1 },
-    { q: "A tuberculose é:", o: ["Genética", "Contagiosa", "Autoimune", "Nutricional"], a: 1 }
+    {
+        q: "O que é a tuberculose?",
+        o: ["Uma doença causada por vírus", "Uma doença causada por bactéria", "Uma alergia respiratória", "Uma doença genética"],
+        a: 1,
+        exp: "A tuberculose é causada por uma bactéria."
+    },
+    {
+        q: "Qual destes é um sintoma comum da tuberculose?",
+        o: ["Dor de ouvido", "Tosse persistente", "Quebra de braço", "Coceira na pele"],
+        a: 1,
+        exp: "A tosse persistente é um dos sintomas mais comuns."
+    },
+    {
+        q: "Como a tuberculose pode ser transmitida?",
+        o: ["Pelo consumo de água contaminada", "Pelo ar, através da tosse e espirro", "Pelo toque nas mãos", "Pela picada de mosquito"],
+        a: 1,
+        exp: "A transmissão acontece pelo ar, quando uma pessoa doente tosse ou espirra."
+    },
+    {
+        q: "Qual destes NÃO é sintoma da tuberculose?",
+        o: ["Tosse longa", "Febre", "Suor noturno", "Quebra de braço"],
+        a: 3,
+        exp: "Quebra de braço não tem relação com tuberculose."
+    },
+    {
+        q: "Se uma pessoa tosse por muitas semanas, ela deve:",
+        o: ["Ignorar", "Procurar atendimento médico", "Fazer exercício", "Tomar sorvete"],
+        a: 1,
+        exp: "Tosse por muitas semanas precisa ser avaliada por um profissional de saúde."
+    },
+    {
+        q: "Qual hábito ajuda a evitar doenças respiratórias?",
+        o: ["Lavar as mãos", "Compartilhar garrafas", "Ficar em locais fechados", "Não tomar água"],
+        a: 0,
+        exp: "Lavar as mãos ajuda a prevenir várias doenças."
+    },
+    {
+        q: "A tuberculose tem cura?",
+        o: ["Não", "Sim, com tratamento correto", "Apenas em crianças", "Apenas com cirurgia"],
+        a: 1,
+        exp: "A tuberculose tem cura quando o tratamento é feito corretamente."
+    },
+    {
+        q: "Qual órgão do corpo é mais afetado pela tuberculose?",
+        o: ["Coração", "Pele", "Pulmões", "Estômago"],
+        a: 2,
+        exp: "A tuberculose afeta principalmente os pulmões."
+    },
+    {
+        q: "A vacina que ajuda a proteger contra formas graves da tuberculose chama-se:",
+        o: ["HPV", "Influenza", "BCG", "Tríplice Viral"],
+        a: 2,
+        exp: "A vacina BCG ajuda a proteger contra formas graves da tuberculose."
+    },
+    {
+        q: "A tuberculose pode atingir outras partes do corpo além dos pulmões?",
+        o: ["Verdadeiro", "Falso"],
+        a: 0,
+        exp: "A tuberculose pode afetar outras partes do corpo além dos pulmões."
+    },
+    {
+        q: "Pessoas com tuberculose sempre apresentam sintomas imediatamente",
+        o: ["Verdadeiro", "Falso"],
+        a: 1,
+        exp: "Algumas pessoas podem não apresentar sintomas logo no início."
+    },
+    {
+        q: "Qual é o sintoma mais comum?",
+        o: ["Dor no pé", "Tosse persistente", "Coceira", "Dor de dente"],
+        a: 1,
+        exp: "A tosse persistente é o sintoma mais comum da tuberculose pulmonar."
+    },
+    {
+        q: "A tuberculose é:",
+        o: ["Genética", "Contagiosa", "Autoimune", "Nutricional"],
+        a: 1,
+        exp: "A tuberculose é contagiosa e pode ser transmitida pelo ar."
+    }
 ];
 
 let quizQuestions = [];
@@ -22,17 +87,19 @@ let currentQuestionIndex = 0;
 let score = 0;
 let selectedOptionIndex = null;
 let studentName = "";
-let studentClass = "";
 
 const startScreen = document.getElementById('start-screen');
 const questionScreen = document.getElementById('question-screen');
 const resultScreen = document.getElementById('result-screen');
 const lockScreen = document.getElementById('lock-screen');
+
 const startBtn = document.getElementById('start-btn');
 const nextBtn = document.getElementById('next-btn');
+
 const qNumber = document.getElementById('q-number');
 const qText = document.getElementById('q-text');
 const optionsContainer = document.getElementById('options-container');
+
 const progressBar = document.getElementById('progress-bar');
 const progressContainer = document.getElementById('progress-container');
 
@@ -52,15 +119,15 @@ function checkLock() {
         progressContainer.style.display = 'none';
         return true;
     }
+
     return false;
 }
 
 function startQuiz() {
     studentName = document.getElementById('student-name').value.trim();
-    studentClass = document.getElementById('student-class').value;
 
-    if (!studentName || !studentClass) {
-        alert("Por favor, preencha seu nome e selecione sua turma antes de iniciar!");
+    if (!studentName) {
+        alert("Por favor, preencha seu nome antes de iniciar!");
         return;
     }
 
@@ -68,51 +135,87 @@ function startQuiz() {
 
     quizQuestions = rawQuestions.map(item => {
         const correctText = item.o[item.a];
-        let shuffledOptions = [...item.o];
+        const shuffledOptions = [...item.o];
+
         shuffle(shuffledOptions);
+
         return {
             question: item.q,
             options: shuffledOptions,
-            answer: shuffledOptions.indexOf(correctText)
+            answer: shuffledOptions.indexOf(correctText),
+            correctText: correctText,
+            explanation: item.exp
         };
     });
+
     shuffle(quizQuestions);
 
     startScreen.classList.remove('active');
     questionScreen.classList.add('active');
+
     progressContainer.style.display = 'block';
+
     loadQuestion();
 }
 
 function loadQuestion() {
     selectedOptionIndex = null;
     nextBtn.disabled = true;
+
     const currentQuestion = quizQuestions[currentQuestionIndex];
-    
+
     qNumber.textContent = `Pergunta ${currentQuestionIndex + 1} de ${quizQuestions.length}`;
     progressBar.style.width = `${(currentQuestionIndex / quizQuestions.length) * 100}%`;
     qText.textContent = currentQuestion.question;
+
     optionsContainer.innerHTML = '';
-    
+
     currentQuestion.options.forEach((option, index) => {
         const li = document.createElement('li');
+
         li.className = 'option-item';
         li.textContent = option;
+
         li.addEventListener('click', () => {
-            optionsContainer.querySelectorAll('.option-item').forEach(i => i.classList.remove('selected'));
-            li.classList.add('selected');
+            if (selectedOptionIndex !== null) return;
+
             selectedOptionIndex = index;
+
+            const allOptions = optionsContainer.querySelectorAll('.option-item');
+
+            allOptions.forEach(item => {
+                item.classList.remove('selected');
+                item.style.pointerEvents = 'none';
+            });
+
+            if (index === currentQuestion.answer) {
+                li.classList.add('correct');
+                score++;
+            } else {
+                li.classList.add('wrong');
+                allOptions[currentQuestion.answer].classList.add('correct');
+            }
+
+            const explanation = document.createElement('div');
+            explanation.className = 'answer-feedback';
+
+            explanation.innerHTML = `
+                <div class="feedback-title">✅ Resposta correta:</div>
+                <div class="feedback-answer">${currentQuestion.correctText}</div>
+                <div class="feedback-exp">${currentQuestion.explanation}</div>
+            `;
+
+            optionsContainer.appendChild(explanation);
             nextBtn.disabled = false;
         });
+
         optionsContainer.appendChild(li);
     });
 }
 
 function nextQuestion() {
-    if (selectedOptionIndex === quizQuestions[currentQuestionIndex].answer) {
-        score++;
-    }
     currentQuestionIndex++;
+
     if (currentQuestionIndex < quizQuestions.length) {
         loadQuestion();
     } else {
@@ -123,33 +226,50 @@ function nextQuestion() {
 function finishQuiz() {
     questionScreen.classList.remove('active');
     resultScreen.classList.add('active');
+
     progressBar.style.width = '100%';
+
     document.getElementById('final-score').textContent = score;
 
     const feedback = document.getElementById('feedback-msg');
-    if (score >= 10) { feedback.textContent = "✨ Excelente pontuação!"; feedback.style.color = "var(--correct)"; }
-    else if (score >= 6) { feedback.textContent = "👍 Muito bom trabalho!"; feedback.style.color = "var(--primary)"; }
-    else { feedback.textContent = "📚 Valeu o esforço!"; feedback.style.color = "var(--wrong)"; }
+
+    if (score >= 10) {
+        feedback.textContent = "✨ Excelente pontuação!";
+        feedback.style.color = "var(--correct)";
+    } else if (score >= 6) {
+        feedback.textContent = "👍 Muito bom trabalho!";
+        feedback.style.color = "var(--primary)";
+    } else {
+        feedback.textContent = "📚 Valeu o esforço!";
+        feedback.style.color = "var(--wrong)";
+    }
 
     localStorage.setItem('quiz_tb_concluido', 'true');
 
     const dados = {
         Nome: studentName,
-        Turma: studentClass,
-        Nota: `${score} de 13`
+        Nota: `${score} de ${quizQuestions.length}`
     };
 
     fetch(FORMSPREE_URL, {
         method: "POST",
         body: JSON.stringify(dados),
-        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
-    }).then(response => {
-        document.getElementById('status-delivery').textContent = "✅ Nota salva no banco do Professor com sucesso!";
-    }).catch(error => {
-        document.getElementById('status-delivery').textContent = "⚠️ Concluído! Lembre o professor de checar os envios.";
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        document.getElementById('status-delivery').textContent =
+            "✅ Nota salva no banco do Professor com sucesso!";
+    })
+    .catch(error => {
+        document.getElementById('status-delivery').textContent =
+            "⚠️ Concluído! Lembre o professor de checar os envios.";
     });
 }
 
 startBtn.addEventListener('click', startQuiz);
 nextBtn.addEventListener('click', nextQuestion);
+
 window.onload = checkLock;

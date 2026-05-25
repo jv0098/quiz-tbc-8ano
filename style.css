@@ -28,9 +28,6 @@ body {
     padding: 20px;
 }
 
-/* ==========================================================================
-   PLANO DE FUNDO (BACKGROUND GERAL)
-   ========================================================================== */
 .bg-image-container {
     position: fixed;
     top: 0;
@@ -41,7 +38,7 @@ body {
     background-image: url('img/turbeculose.jpeg');
     background-size: cover;
     background-position: center;
-    filter: brightness(0.15) contrast(1.1); /* Bem escuro para dar destaque total ao quiz */
+    filter: brightness(0.15) contrast(1.1);
 }
 
 .bg-overlay {
@@ -54,12 +51,9 @@ body {
     background: linear-gradient(135deg, rgba(10, 17, 40, 0.85) 0%, rgba(0, 102, 235, 0.2) 100%);
 }
 
-/* ==========================================================================
-   ESTRUTURA DO CONTAINER PRINCIPAL
-   ========================================================================== */
 .quiz-container {
     width: 100%;
-    max-width: 500px; /* Reduzi levemente a largura máxima para abraçar melhor a foto vertical */
+    max-width: 500px;
     background: var(--card-bg);
     border: 2px solid rgba(0, 210, 255, 0.3);
     border-radius: 20px;
@@ -90,32 +84,19 @@ header p {
     color: #8a99ad;
 }
 
-/* ==========================================================================
-   BANNER DO QUADRADO DA IMAGEM (ENQUADRAMENTO PERFEITO)
-   ========================================================================== */
 .quiz-banner {
     width: 100%;
-    height: 450px; 
+    height: 450px;
     background-image: url('img/turbeculose.jpeg');
     background-repeat: no-repeat;
     border-radius: 12px;
     margin-bottom: 25px;
-    border: 2px solid rgba(0, 210, 255, 0.4); 
+    border: 2px solid rgba(0, 210, 255, 0.4);
     box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
-
-    /* 1. CONTROLE DE ZOOM (Substitui o 'cover') */
-    /* Altere o primeiro valor para aumentar/diminuir o tamanho da imagem */
-    background-size: 463px auto; 
-
-    /* 2. CONTROLE DE MOVIMENTO (Lados e Cima/Baixo) */
-    /* Primeiro valor (X): Move para Esquerda (-) ou Direita (+) */
-    /* Segundo valor (Y): Move para Cima (-) ou Baixo (+) */
-    background-position: -30px -120px; 
+    background-size: 463px auto;
+    background-position: -30px -120px;
 }
 
-/* ==========================================================================
-   BARRA DE PROGRESSO
-   ========================================================================== */
 .progress-bar-container {
     width: 100%;
     height: 8px;
@@ -132,9 +113,6 @@ header p {
     transition: width 0.4s ease;
 }
 
-/* ==========================================================================
-   MECÂNICA DE TELAS E ANIMAÇÃO
-   ========================================================================== */
 .screen {
     display: none;
 }
@@ -145,13 +123,17 @@ header p {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-/* ==========================================================================
-   FORMULÁRIOS E INPUTS (TELA DE IDENTIFICAÇÃO)
-   ========================================================================== */
 .input-group {
     margin-bottom: 15px;
     text-align: left;
@@ -165,7 +147,8 @@ header p {
     font-weight: bold;
 }
 
-.input-group input, .input-group select {
+.input-group input,
+.input-group select {
     width: 100%;
     padding: 12px;
     background: rgba(0, 0, 0, 0.4);
@@ -176,15 +159,13 @@ header p {
     transition: all 0.3s;
 }
 
-.input-group input:focus, .input-group select:focus {
+.input-group input:focus,
+.input-group select:focus {
     outline: none;
     border-color: var(--primary);
     box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
 }
 
-/* ==========================================================================
-   QUESTÕES E OPÇÕES (TELA DE JOGO)
-   ========================================================================== */
 .question-text {
     font-size: 18px;
     font-weight: 600;
@@ -219,9 +200,52 @@ header p {
     border-color: var(--accent);
 }
 
-/* ==========================================================================
-   BOTÕES E SCORE DE SUCESSO (TELA FINAL)
-   ========================================================================== */
+/* RESPOSTA CORRETA */
+.option-item.correct {
+    background: rgba(6, 214, 160, 0.22);
+    border: 2px solid var(--correct);
+    color: #ffffff;
+    box-shadow: 0 0 14px rgba(6, 214, 160, 0.45);
+}
+
+/* RESPOSTA ERRADA */
+.option-item.wrong {
+    background: rgba(239, 71, 111, 0.22);
+    border: 2px solid var(--wrong);
+    color: #ffffff;
+    box-shadow: 0 0 14px rgba(239, 71, 111, 0.45);
+}
+
+/* BLOCO DA RESPOSTA CERTA + EXPLICAÇÃO */
+.answer-feedback {
+    margin-top: 18px;
+    padding: 15px;
+    border-radius: 12px;
+    background: rgba(6, 214, 160, 0.12);
+    border: 1px solid rgba(6, 214, 160, 0.45);
+    color: #ffffff;
+    animation: fadeIn 0.3s ease;
+}
+
+.feedback-title {
+    font-weight: 700;
+    color: var(--correct);
+    margin-bottom: 6px;
+}
+
+.feedback-answer {
+    font-size: 17px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+.feedback-exp {
+    font-size: 14px;
+    color: #d6f7ef;
+    line-height: 1.5;
+}
+
 .btn {
     background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
     color: white;
@@ -255,46 +279,53 @@ header p {
     background: rgba(0, 210, 255, 0.05);
 }
 
-.score-num { font-size: 36px; font-weight: bold; color: #fff; }
-.status-msg { margin-top: 15px; font-size: 14px; color: #06d6a0; font-weight: bold;}
+.score-num {
+    font-size: 36px;
+    font-weight: bold;
+    color: #fff;
+}
 
-#lock-screen { text-align: center; }
-.lock-icon { font-size: 50px; color: var(--wrong); margin-bottom: 15px; }
+.status-msg {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #06d6a0;
+    font-weight: bold;
+}
 
-/* ==========================================================================
-   RESPONSIVIDADE (CELULARES E TABLETS)
-   ========================================================================== */
+#lock-screen {
+    text-align: center;
+}
+
+.lock-icon {
+    font-size: 50px;
+    color: var(--wrong);
+    margin-bottom: 15px;
+}
+
 @media (max-width: 480px) {
     .quiz-container {
         padding: 20px 15px;
         border-radius: 12px;
     }
+
     header h1 {
         font-size: 20px;
     }
+
     .quiz-banner {
-        height: 240px; /* Encurta um pouquinho no celular para caber os botões sem precisar rolar muito */
-        background-position: center 25%;
+        height: 260px;
+        background-size: cover;
+        background-position: center 30%;
+        background-repeat: no-repeat;
+        border-radius: 14px;
     }
+
     .question-text {
         font-size: 16px;
     }
+
     .option-item {
         font-size: 14px;
         padding: 12px 15px;
     }
-}
-
-@media (max-width: 480px) {
-
-    .quiz-banner {
-        height: 260px;
-
-        background-size: cover;
-        background-position: center 30%;
-        background-repeat: no-repeat;
-
-        border-radius: 14px;
-    }
-
 }
